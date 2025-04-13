@@ -1,0 +1,43 @@
+:root {
+  --grid-cell: 100px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+#board-container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(3, var(--grid-cell));
+  align-content: center;
+  justify-content: center;
+}
+
+.cell {
+  border: 1px solid black;
+  width: var(--grid-cell);
+  height: var(--grid-cell)
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+  border-top: none;
+}
+
+.cell:nth-child(3n) {
+  border-right: none;
+}
+
+.cell:nth-child(3n-2) {
+  border-left: none;
+}
+
+.cell:last-child,
+.cell:nth-child(8),
+.cell.cell:nth-child(7) {
+  border-bottom: none;
+}
