@@ -1,5 +1,6 @@
 :root {
   --grid-cell: 100px;
+  --marker: calc((var(--grid-cell) * 0.9));
 }
 
 *,
@@ -14,12 +15,18 @@
   grid-template-columns: repeat(3, var(--grid-cell));
   align-content: center;
   justify-content: center;
+  justify-items: center;
+  align-items: center;
 }
 
 .cell {
   border: 1px solid black;
   width: var(--grid-cell);
-  height: var(--grid-cell)
+  height: var(--grid-cell);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .cell:first-child,
@@ -40,4 +47,40 @@
 .cell:nth-child(8),
 .cell.cell:nth-child(7) {
   border-bottom: none;
+}
+
+.x-marker::before,
+.x-marker::after {
+  content: '';
+  background-color: black;
+  width: calc(var(--marker) * 0.15);
+  height: var(--marker);
+  position: absolute;
+}
+
+.x-marker::before {
+  transform: rotate(45deg);
+}
+
+.x-marker::after {
+  transform: rotate(-45deg);
+}
+
+.o-marker::before,
+.o-marker::after {
+  content: '';
+  border-radius: 50%;
+  position: absolute;
+}
+
+.o-marker::before {
+  background-color: black;
+  width: var(--marker);
+  height: var(--marker);
+}
+
+.o-marker::after {
+  background-color: white;
+  width: calc(var(--marker) * .7);
+  height: calc(var(--marker) * .7);
 }
