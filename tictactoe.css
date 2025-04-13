@@ -27,6 +27,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  cursor: pointer;
 }
 
 .cell:first-child,
@@ -49,38 +50,63 @@
   border-bottom: none;
 }
 
-.x-marker::before,
-.x-marker::after {
-  content: '';
+/* markers setup */
+
+.cell.x-marker,
+.cell.o-marker {
+  cursor: not-allowed;
+}
+
+.cell.x-marker::before,
+.cell.x-marker::after,
+.cell.o-marker::before {
   background-color: black;
+}
+
+.board-container.x-marker .cell:not(.x-marker):not(.o-marker):hover::before,
+.board-container.x-marker .cell:not(.x-marker):not(.o-marker):hover::after,
+.board-container.o-marker .cell:not(.x-marker):not(.o-marker):hover::before {
+  background-color: lightgrey;
+}
+
+.cell.x-marker::before,
+.cell.x-marker::after,
+.board-container.x-marker .cell:not(.x-marker):not(.o-marker):hover::before,
+.board-container.x-marker .cell:not(.x-marker):not(.o-marker):hover::after {
+  content: '';
   width: calc(var(--marker) * 0.15);
   height: var(--marker);
   position: absolute;
 }
 
-.x-marker::before {
+.cell.x-marker::before,
+.board-container.x-marker .cell:not(.x-marker):not(.o-marker):hover::before {
   transform: rotate(45deg);
 }
 
-.x-marker::after {
+.cell.x-marker::after,
+.board-container.x-marker .cell:not(.x-marker):not(.o-marker):hover::after {
   transform: rotate(-45deg);
 }
 
-.o-marker::before,
-.o-marker::after {
+.cell.o-marker::before,
+.cell.o-marker::after,
+.board-container.o-marker .cell:not(.x-marker):not(.o-marker):hover::before,
+.board-container.o-marker .cell:not(.x-marker):not(.o-marker):hover::after {
   content: '';
   border-radius: 50%;
   position: absolute;
 }
 
-.o-marker::before {
-  background-color: black;
+.cell.o-marker::before,
+.board-container.o-marker .cell:not(.x-marker):not(.o-marker):hover::before {
   width: var(--marker);
   height: var(--marker);
 }
 
-.o-marker::after {
+.cell.o-marker::after,
+.board-container.o-marker .cell:not(.x-marker):not(.o-marker):hover::after {
   background-color: white;
-  width: calc(var(--marker) * .7);
-  height: calc(var(--marker) * .7);
+  width: calc(var(--marker) * 0.7);
+  height: calc(var(--marker) * 0.7);
 }
