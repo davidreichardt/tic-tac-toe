@@ -50,7 +50,7 @@ function GameBoard() {
         //return true if a winning combo is found, breaking the loop
         console.log(`The Winning Combo is: ${combo}`);
         endScreen.classList.add('show');
-        messageElement.textContent = `${player.name} Wins!`
+        messageElement.textContent = `${player.name} Wins!`;
         return true;
       }
     }
@@ -127,6 +127,8 @@ function GameController() {
     const draw = game.checkDraw();
     if (draw) {
       console.log('Draw!');
+      game.endScreen.classList.add('show');
+      game.messageElement.textContent = `It's a Draw!`;
       return;
     }
 
