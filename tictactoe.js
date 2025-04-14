@@ -1,4 +1,10 @@
 function GameBoard() {
+  //get html elements
+  const boardElement = document.getElementById('board-container');
+  const cellElements = document.querySelectorAll('.cell');
+  const endScreen = document.getElementById('end-screen');
+  const messageElement = document.getElementById('message');
+  const resetButton = document.getElementById('reset-button');
   //A variable 'board' that holds the gameboard as an array
   const board = [];
 
@@ -43,6 +49,8 @@ function GameBoard() {
       if (board[a] === mark && board[b] === mark && board[c] === mark) {
         //return true if a winning combo is found, breaking the loop
         console.log(`The Winning Combo is: ${combo}`);
+        endScreen.classList.add('show');
+        messageElement.textContent = `${player.name} Wins!`
         return true;
       }
     }
@@ -54,7 +62,18 @@ function GameBoard() {
     return board.every((index) => index !== '');
   };
 
-  return { createBoard, board, placeMarker, checkWin, checkDraw }; //return everything to be used
+  return {
+    createBoard,
+    board,
+    placeMarker,
+    checkWin,
+    checkDraw,
+    boardElement,
+    cellElements,
+    endScreen,
+    messageElement,
+    resetButton,
+  }; //return everything to be used
 }
 
 //A function to make a player object
@@ -72,12 +91,20 @@ function GameController() {
   const player2 = Player('Player 2', 'O');
   //declare an initial current player
   let currentPlayer = player1;
+  game.boardElement.classList.add('x-marker');
   //create board
   game.createBoard();
 
   //A function to switch turns
   const switchTurn = () => {
     currentPlayer = currentPlayer === player1 ? player2 : player1;
+    if (currentPlayer === player1) {
+      game.boardElement.classList.remove('o-marker');
+      game.boardElement.classList.add('x-marker');
+    } else if (currentPlayer === player2) {
+      game.boardElement.classList.remove('x-marker');
+      game.boardElement.classList.add('o-marker');
+    }
   };
 
   const playRound = (index) => {
@@ -93,6 +120,7 @@ function GameController() {
     const win = game.checkWin(currentPlayer);
     if (win) {
       console.log(`Win: ${win}, ${currentPlayer.name} wins!`);
+      game.me;
       return;
     }
 
@@ -106,26 +134,43 @@ function GameController() {
     console.log(`Current player: ${currentPlayer.name}`);
   };
 
+  //attach eventlistener to each cell on the game board
+  game.cellElements.forEach((cell) => {
+    cell.addEventListener('click', () => {
+      console.log(currentPlayer.name);
+      if (
+        cell.classList.contains('x-marker') ||
+        cell.classList.contains('o-marker')
+      )
+        return;
+      //grab the data-cell and change it to a number
+      const index = parseInt(cell.dataset.cell);
+      cell.classList.add(
+        currentPlayer.marker === 'X' ? 'x-marker' : 'o-marker'
+      );
+      playRound(index);
+    });
+  });
+
   //A function to render the board after each turn
   //A function to restart the game
   const restart = () => {
     game.createBoard(); //reinitialize board
     currentPlayer = player1; //reinitialize current player
+    game.boardElement.classList.add('x-marker'); //add hover marker class
+    game.cellElements.forEach((cell) => {
+      cell.classList.remove('x-marker');
+      cell.classList.remove('o-marker');
+    });
+    game.endScreen.classList.remove('show'); //hide end screen
   };
 
-  return { playRound, switchTurn, restart };
+  game.resetButton.addEventListener('click', restart);
+
+  // return { playRound, switchTurn, restart };
 }
 
-const run = GameController();
-run.playRound(0);
-run.playRound(1);
-run.playRound(2);
-run.playRound(4);
-run.playRound(3);
-run.playRound(5);
-run.playRound(7);
-run.playRound(6);
-run.playRound(8);
+GameController();
 
 /*
 Game loop:

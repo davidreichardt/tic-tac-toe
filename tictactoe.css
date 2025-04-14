@@ -17,6 +17,7 @@
   justify-content: center;
   justify-items: center;
   align-items: center;
+  overflow-y: hidden;
 }
 
 .cell {
@@ -109,4 +110,45 @@
   background-color: white;
   width: calc(var(--marker) * 0.7);
   height: calc(var(--marker) * 0.7);
+}
+
+.end-screen {
+  display: none;
+}
+
+.show {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 100vh;
+  width: 100vw;
+  overflow-y: hidden;
+}
+
+#message {
+  font-size: 4rem;
+  color: white;
+  font-weight: 900;
+}
+
+#reset-button {
+  font-size: 3rem;
+  border-radius: 20px;
+  width: 200px;
+  height: 80px;
+  cursor: pointer;
+  color: black;
+  background-color: white;
+  border: 2px solid black;
+}
+
+#reset-button:hover {
+  color: white;
+  background-color: black;
+  border: 2px solid white;
 }
